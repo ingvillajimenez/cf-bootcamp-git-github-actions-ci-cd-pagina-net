@@ -1,0 +1,35 @@
+name: CI/CD para pagina web en Azure
+
+on:
+  push:
+
+jobs:
+  ci:
+    name: CI
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar repositorio de forma local
+        uses: actions/checkout@v4
+
+      - name: Configurar .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "9.0.x"
+
+      - name: Descargar dependencias
+        run: dotnet restore UsersWeb.sln
+
+      - name: Compilar en modo Release
+        run: dotnet build UsersWeb.sln --configuration Release --no-restore
+
+      - name: Ejecutar pruebas
+        run: dotnet test UsersWeb.Tests/UsersWeb.Tests.csproj --configuration Release --no-build --verbosity minimal
+
+      - name: Publicar
+        run: dotnet publish UsersWeb/UsersWeb.csproj -c Release -o published
+
+      - name: Exportar ensamblado para publicar (artefacto)
+        uses: actions/upload-artifact@v4
+        with:
+          name: usersweb-published
+          path: published/

@@ -1,0 +1,30 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Usuarios Aleatorios</h1>
+    <p>Se muestran @Model.Total usuarios generados dinámicamente. Puedes cambiar la cantidad con ?count=20</p>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var u in Model.Usuarios)
+    {
+        <tr>
+            <td>@u.Id</td>
+            <td>@u.Nombre</td>
+            <td>@u.Email</td>
+        </tr>
+    }
+    </tbody>
+</table>
