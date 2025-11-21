@@ -46,7 +46,7 @@ jobs:
       - name: Descargar ensamblado (artefacto)
         uses: actions/download-artifact@v4
         with:
-          name: webapp
+          name: usersweb-published
 
       - name: Iniciar sesion en Azure
         uses: azure/login@v2
